@@ -1,18 +1,13 @@
-# db-mysql
+
+## Gitlab pipeline to upload mysql, as well as phpMyadmin, images to local repository.
+
+### There are three possibilities of manifests to be run
+
+1 **manifest using Shell Gitlab-runner to set up the mysql image** 
+2 **manifest using Docker Gitlab-runner to set up the mysql image** 
+3 **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
 
 
-# Gitlab pipeline to upload mysql, as well as phpMyadmin, images to local repository.
-
-## There are three possibilities of manifests to be run
-
-- **manifest using Shell Gitlab-runner to set up the mysql image** 
-- **manifest using Docker Gitlab-runner to set up the mysql image** 
-- **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
-
-
-- **Update an Employee:** Make changes to their information/details and save the updated data.
-
-- **View All Employees**: Fetch all employees from the database in a single click.
 
 
 - Install requirements
