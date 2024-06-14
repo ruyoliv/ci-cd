@@ -3,9 +3,9 @@
 
 ### There are three possibilities of manifests to be run
 
-1 **manifest using Shell Gitlab-runner to set up the mysql image** 
-2 **manifest using Docker Gitlab-runner to set up the mysql image** 
-3 **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
+1. **manifest using Shell Gitlab-runner to set up the mysql image** 
+2. **manifest using Docker Gitlab-runner to set up the mysql image** 
+3. **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
 
 
 
