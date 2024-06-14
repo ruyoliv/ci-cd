@@ -1,0 +1,28 @@
+# Gera uma image docker: myqsl. E usado o Gitlab-runner executor Docker com a imagem Dind 
+
+variables:
+    MYSQL_DATABASE: ifmt_db
+    MYSQL_ROOT_PASSWORD: ifmt2
+    DOCKER_NET: db
+    MYSQL_CONTAINER_NAME: meu-mysql
+    MYSQL_CLIENT_CONTAINER_NAME: meu-phpMyadmin
+stages:
+    - build
+build-image:
+    image: docker
+    stage: build
+    variables:
+        DOCKER_TLS_CERTDIR: "/certs"
+        MY_CI_REGISTRY: "gitlab.server.local:5050" 
+    services:
+        - name: docker:26.1.3-dind  
+          alias: docker
+    script:      
+        - echo "Trying to Log in!!!   ---- $MY_CI_REGISTRY - & ---$CI_REGISTRY"
+        - docker login -u  $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - echo "Logged in!!!"
+        - echo "criando a imagem do mysql cliente:- phpMyadmin"
+        - docker build -t $CI_REGISTRY/devops/db-mysql:phpMyadmin ./phpMyadmin 
+        - echo "Imagem phpMyadmin construida!!! " 
+        - docker push $CI_REGISTRY/devops/db-mysql:phpMyadmin 
+        - echo "Imagem  phpMyadmin no repositorio+++!  "

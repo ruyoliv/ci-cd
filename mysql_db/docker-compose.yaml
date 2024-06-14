@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: gitlab_MySQL
+    restart: always
+    cap_add:
+      - SYS_NICE
+    environment:
+      - MYSQL_DATABASE=ifmt_db
+      - MYSQL_USER=ifmt
+      - MYSQL_PASSWORD=ifmt
+      - MYSQL_ROOT_PASSWORD=ifmt2
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 5022:3306
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: gitlab_PhpMyAdmin   
+    restart: always
+    ports:
+      - 5023:80
+    environment:
+      - PMA_ARBITRARY=1
+    
+volumes:
+  mysql-data:

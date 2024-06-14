@@ -1,0 +1,29 @@
+# Gera imagem do banco de dados mysql e a sobre para o repositorio do Gitlab
+# com o gitlab-runner executor SHELL, não é necessária nenhuma imagem Docker no pipeline
+
+variables:
+    MYSQL_DATABASE: ifmt_db
+    #MYSQL_ROOT_PASSWORD: ifmt2   # definido com variavel interna
+    DOCKER_NET: db
+    MYSQL_CONTAINER_NAME: meu-mysql
+    MYSQL_CLIENT_CONTAINER_NAME: meu-phpMyadmin
+stages:
+    - construcao
+    - entrega
+criacao-imagem:
+    stage: construcao
+    variables:
+        DOCKER_TLS_CERTDIR: "/certs"
+    script:
+        - docker build -t $CI_REGISTRY/devops/db-mysql:v1 .
+        - echo "Imagem  construida!!+++ !"
+Entrega-imagem:
+    stage: entrega
+    variables:
+        DOCKER_TLS_CERTDIR: "/certs"
+    script:
+        - echo "Acessando o repositorio!!! " 
+        - docker login -u  $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - echo "Logged in!!!"
+        - docker push $CI_REGISTRY/devops/db-mysql:v1 
+        - echo "Imagem entrega no repositorio!!!"
