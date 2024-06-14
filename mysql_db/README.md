@@ -5,12 +5,10 @@
 
 ## There are three possibilities of manifests to be run
 
+- ** manifest using Shell Gitlab-runner to set up the mysql image** 
+- ** manifest using Docker Gitlab-runner to set up the mysql image** 
+- ** manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
 
-## Features
-
- *Add an Employee: Easily add new employees to your database with this function. Input their details, and the system will store them in the database.
-
-- **Delete an Employee:** Select the employee to delete, and with a click of a button, it will remove the employee details from the database.
 
 - **Update an Employee:** Make changes to their information/details and save the updated data.
 
