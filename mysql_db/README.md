@@ -15,16 +15,20 @@ While the two first option target the Docker mysql image, the third manifest is 
 
 The .gitlab-ci.yml contains the content of the first manifest such mentioned. 
 
-To run the second option (mysql):
+Run the second option (mysql):
 ```sh
 cp mysql_docker_runner .gitlab-ci.yml
 ```
 
-To run the third option (phpMyadmin):
+Run the third option (phpMyadmin):
 ```sh
-cp mysql_docker_runner .gitlab-ci.yml
+cp phpMyadmin_docker_runner .gitlab-ci.yml
 ```
-
+Start the mysql container:
+```sh
+docker run -td --name meu-mysql --network=db -e MYSQL_ROOT_PASSWORD=XXXX -v mysql-data:/var/lib/mysql -p 8900:3306 192.168.0.20:5050/devops/db-mysql:v1
+```
+adjust the parameters according to your setup
 
 - Install requirements
 ```sh
