@@ -13,6 +13,18 @@ The second one includes the Docker-in-Docker feature, in the sense that two Dock
 
 While the two first option target the Docker mysql image, the third manifest is related to the phpMyadmin Docker image and uses simply the Docker executor with the Docker-in-Docker related images.
 
+The .gitlab-ci.yml contains the content of the first manifest such mentioned. 
+
+To run the second option (mysql):
+```sh
+cp mysql_docker_runner .gitlab-ci.yml
+```
+
+To run the third option (phpMyadmin):
+```sh
+cp mysql_docker_runner .gitlab-ci.yml
+```
+
 
 - Install requirements
 ```sh
