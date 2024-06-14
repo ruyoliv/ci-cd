@@ -7,7 +7,11 @@
 2. **manifest using Docker Gitlab-runner to set up the mysql image** 
 3. **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
 
+The first option aims at showing that it is possible to run the pipeline without usig any Docker image in it. 
 
+The second one includes the Docker-in-Docker feature, in the sense that two Docker images are needed when using a Docker executor.
+
+While the two first option target the Docker mysql image, the third manifest is related to the phpMyadmin Docker image and uses simply the Docker executor with the Docker-in-Docker related images.
 
 
 - Install requirements
