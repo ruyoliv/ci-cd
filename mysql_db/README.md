@@ -5,9 +5,9 @@
 
 ## There are three possibilities of manifests to be run
 
-- ** manifest using Shell Gitlab-runner to set up the mysql image** 
-- ** manifest using Docker Gitlab-runner to set up the mysql image** 
-- ** manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
+- **manifest using Shell Gitlab-runner to set up the mysql image** 
+- **manifest using Docker Gitlab-runner to set up the mysql image** 
+- **manifest using Docker Gitlab-runner to set up the phpMyadmin image** 
 
 
 - **Update an Employee:** Make changes to their information/details and save the updated data.
