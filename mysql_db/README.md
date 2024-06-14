@@ -49,5 +49,5 @@ docker run -it --network db --rm mysql mysql -h meu-mysql -u root -p
 
 If everything went well so far, access the mysql client's container (phpMyadmin) in the browser throught port 9000. Use the name of the mysql conteiner to connect (meu-mysql):
 ```sh
-localhost:9000
+in the browser --> localhost:9000
 ```
