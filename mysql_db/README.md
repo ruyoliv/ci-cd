@@ -24,25 +24,30 @@ Run the third option (phpMyadmin):
 ```sh
 cp phpMyadmin_docker_runner .gitlab-ci.yml
 ```
+Create a network to run both containers:
+```sh
+docker network create db
+```
+Note: *this network is mandatory for the containers to communicate with each other
+
 Start the mysql container:
 ```sh
 docker run -td --name meu-mysql --network=db -e MYSQL_ROOT_PASSWORD=XXXX -v mysql-data:/var/lib/mysql -p 8900:3306 192.168.0.20:5050/devops/db-mysql:v1
 ```
-adjust the parameters according to your setup
+Note: *adjust the parameters according to your setup
 
-- Install requirements
+Start the phpMysql container:
 ```sh
-pip install -r requirements.txt
+docker run -td --name meu-mysql --network=db -e MYSQL_ROOT_PASSWORD=XXXX -v mysql-data:/var/lib/mysql -p 8900:3306 192.168.0.20:5050/devops/db-mysql:v1
+```
+Note: *adjust the parameters according to your setup
+
+Check access to the container:
+```sh
+docker run -it --network db --rm mysql mysql -h meu-mysql -u root -p
 ```
 
-
-```json
-{
-    "pass": "DATABASE PASSWORD",
-    "user": "root",
-    "host": "localhost",
-    "database": "employees"
-}
-
-
-- Run ``main.py``
+If everything went well so far, access the mysql client's container (phpMyadmin) in the browser throught port 9000. Use the name of the mysql conteiner to connect (meu-mysql):
+```sh
+localhost:9000
+```
