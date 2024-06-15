@@ -1,7 +1,7 @@
 
 ## Gitlab pipeline to upload mysql, as well as phpMyadmin, images to local repository.
 
-### There are three options for the .gitlab-ce.yml file to be run. One can choose to run a file relying on a
+### There are three options for the .gitlab-ce.yml file to be run. One can choose to run a file relying on a:
 
 1. **Shell Gitlab-runner to set up the mysql image** 
 2. **Docker Gitlab-runner to set up the mysql image** 
