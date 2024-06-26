@@ -1,0 +1,71 @@
+# Constroi uma aplicacao Django em container e a diponibiliza no repositorio do Docker hub, com base nas acoes do job 1. 
+# No job 2, a imagem do Docker hub e usada para a execucao de containers dentro do Kubernets.
+
+services:
+  - name: docker:26.1.3-dind  
+    alias: docker
+
+stages:
+    - construcao
+    - implantacao
+
+variables:
+    #KUBE_CONTEXT: devops/conexao-k8s:tunnel-gitlab-k8s 
+    DOCKER_IMAGE_NAME_DOCKER_HUB: django-app-k8s:latest
+    #DOCKERHUB_USR: 
+    #DOCKERHUB_PSW: # Para preserver a privacidade, essas duas variaveis devem ser criada como "variable" no Gitlab
+    DOCKER_TLS_CERTDIR: ""
+    SSL_CERT_FILE: '/etc/gitlab-runner/certs/ca.crt' #somente necessario se estiver usando certificado ssl proprio (local)
+
+
+construcao-imagem:
+    image: docker
+    stage: construcao
+    before_script:
+        - echo "Acessando o repositorio (registry) Gitlab!!!   project name;- $CI_COMMIT_REF_NAME  $CI_COMMIT_REF_SLUG $CI_PROJECT_NAME"
+        - docker login -u  $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - echo "Acesso bem-sucedido !!!"
+
+        - echo "Acessando o repositorio Docker hub"
+        - docker login -u $DOCKERHUB_USR -p $DOCKERHUB_PSW
+        - echo "Acesso ao Docker hub bem-sucedido !!! "
+    script:
+
+        - echo "Construindo a imagem Docker da aplicação Django para o repositorio do Gitlab!!!"
+        - docker build -t $CI_REGISTRY/devops/$CI_PROJECT_NAME:v1 .
+        - echo "Imagem construída!!! "
+
+        - echo "Construindo a imagem Docker da aplicação Django para o repositorio do Docker hub!!!"
+        - docker build -t $DOCKERHUB_USR/$DOCKER_IMAGE_NAME_DOCKER_HUB .
+        - echo "Imagem construída!!!"
+
+        - echo "Entregando a imagem no repositorio do Gitlab!!!"
+        - docker push $CI_REGISTRY/devops/$CI_PROJECT_NAME:v1
+
+
+        - echo "Entregando a imagem no repositorio do Docker hub!!!"
+        - docker push $DOCKERHUB_USR/$DOCKER_IMAGE_NAME_DOCKER_HUB    
+
+
+implanta_container:
+    stage: implantacao
+    image:
+        name: bitnami/kubectl:latest
+        entrypoint: ['']
+    variables:
+        KUBE_CONTEXT: devops/conexao-k8s:tunnel-gitlab-k8s 
+    script:
+        - kubectl config get-contexts
+        - echo "Verificando os contextos do k8s existentes"
+        - kubectl config use-context $KUBE_CONTEXT 
+        - echo "Mostrando os pods rodando ANTES da implantacao do aplicativo django-app"
+        - kubectl  get pods -o wide 
+        - echo "criando as credenciais de acesso ao repo"
+        - kubectl delete secret my-docker-secret --ignore-not-found
+        - kubectl create secret docker-registry my-docker-secret --docker-username=$DOCKERHUB_USR  --docker-password=$DOCKERHUB_PSW
+        - echo "Installando a aplicacao nginx-app no K8S  "
+        - kubectl apply -f $CI_PROJECT_DIR/k8s-files
+        - echo "Atualizando o deployment/pod com a nova imagem"
+        - kubectl rollout restart deployment/deployment-django-app 
+        - echo "Mostrando os pods rodando DEPOIS da implantacao do aplicativo django-app"
+        - kubectl  get pods -o wide 

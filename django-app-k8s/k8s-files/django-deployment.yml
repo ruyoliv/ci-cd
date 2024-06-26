@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-django-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pod-django-app
+  template:
+    metadata:
+      labels: 
+        app: pod-django-app
+    spec:
+      containers:
+      - name: container-django-app
+        image: ruyoliv/django-app-k8s:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8000
+      restartPolicy: Always
+      imagePullSecrets:
+      - name: my-docker-secret

@@ -17,18 +17,23 @@
 
 <body>
   
-  <nav class="row" style="background: green; color: white;">
-    <h1 class="col-md-3 text-center">weather  </h1>
+  <nav class="row" style="background: blue; color: white;">
+    <h1 class="col-md-3 text-center">Weather  </h1>
   </nav>
   <br />
   <br />  
+<!-- Added by Ruy-->
+  <div class="jumbotron text-center">
+    <h1>Pesquisa de informações meteorológicas</h1>
+  </div>
+
   <center class="row">
-    <!-- <h4 "text-center">Procura por cidades ao redor do mundo! </h4> -->
+     <h4 "text-center">Entre com o nome da cidade para a qual deseja informações meteorológicas! </h4> 
     <form method="post" class="col-md-6 col-md-offset-3">
       {% csrf_token %}
       <div class="input-group">
         <input type="text" class="form-control"   name="city" placeholder="Search"> 
-        <!--  <input type="text" class="form-control" style="width:140px"  name="city" placeholder="Search">  -->
+        <!--  <input type="text" class="form-control" style="width:140px "  name="city" placeholder="Search">  -->
         <!--  <input type="text"  style='color:red, font-size:16px""   name="city" placeholder="Search">  -->
      
         <div class="input-group-btn">
@@ -48,7 +53,7 @@
         <h5>city : {{name}} </h5>
         <h5>coordinate : {{coordinate}}</h5>
         <h5>temp : {{temp}}</h5>
-        <h5>humidity : {{humidity}}</h5>
+        <h5>humidity : {{humidity}}</h5> 
     </div>
     {% endif %}
   </div>

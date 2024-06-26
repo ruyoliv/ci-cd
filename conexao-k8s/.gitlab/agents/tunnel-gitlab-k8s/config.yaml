@@ -1,0 +1,6 @@
+ci_access:
+  projects:
+    - id: devops/django-app-k8s
+ci_access:
+  groups:
+    - id: devops
